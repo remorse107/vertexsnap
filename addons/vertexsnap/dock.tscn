@@ -1,0 +1,241 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends Control
+
+func _ready():
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+func match_scale() -> bool:
+	return $Panel/VBoxContainer/HBoxContainer3/ckScale.pressed
+
+func match_rotation() -> bool:
+	return $Panel/VBoxContainer/HBoxContainer3/ckRotation.pressed
+	
+func match_x() -> bool:
+	return $Panel/VBoxContainer/HBoxContainer3/ckX.pressed
+	
+func match_y() -> bool:
+	return $Panel/VBoxContainer/HBoxContainer3/ckY.pressed
+
+func match_z() -> bool:
+	return $Panel/VBoxContainer/HBoxContainer3/ckZ.pressed
+
+func snap_vertex() -> bool:
+	return $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckVertex.pressed
+
+func get_alignment_vector() -> Vector3:
+	if $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckFaceNone.pressed:
+		return Vector3.ZERO
+	if $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckFacePosZ.pressed:
+		return Vector3(0,0,1)
+	if $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckFaceNegZ.pressed:
+		return Vector3(0,0,-1)
+	if $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckFacePosX.pressed:
+		return Vector3(1,0,0)
+	if $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckFaceNegX.pressed:
+		return Vector3(-1,0,0)
+	if $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckFacePosY.pressed:
+		return Vector3(0,1,0)
+	if $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckFaceNegY.pressed:
+		return Vector3(0,-1,0)
+	return Vector3.ZERO
+	
+func affect_whole_sub_scene() -> bool:
+	return $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckAffectScene.pressed
+	
+func use_magnets() -> bool:
+	return $Panel/VBoxContainer/HBoxContainer4/VBoxContainer/ckMagnets.pressed
+"
+
+[sub_resource type="StyleBoxLine" id=2]
+color = Color( 0, 1, 0.235294, 1 )
+grow_begin = 0.0
+grow_end = 0.0
+
+[sub_resource type="ButtonGroup" id=3]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 4.0
+margin_right = -800.0
+margin_bottom = 0.00012207
+rect_min_size = Vector2( 280, 0 )
+size_flags_vertical = 3
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+anchor_right = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+margin_right = 280.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+custom_styles/normal = SubResource( 2 )
+text = "Match Object's"
+align = 1
+valign = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 20.0
+margin_right = 280.0
+margin_bottom = 44.0
+
+[node name="ckScale" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_right = 61.0
+margin_bottom = 24.0
+text = "Scale"
+
+[node name="ckRotation" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 65.0
+margin_right = 146.0
+margin_bottom = 24.0
+text = "Rotation"
+
+[node name="ckX" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 150.0
+margin_right = 186.0
+margin_bottom = 24.0
+text = "X"
+
+[node name="ckY" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 190.0
+margin_right = 225.0
+margin_bottom = 24.0
+text = "Y"
+
+[node name="ckZ" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer3"]
+margin_left = 229.0
+margin_right = 265.0
+margin_bottom = 24.0
+text = "Z"
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer"]
+margin_top = 48.0
+margin_right = 280.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+custom_styles/normal = SubResource( 2 )
+text = "Snapping"
+align = 1
+valign = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 68.0
+margin_right = 280.0
+margin_bottom = 108.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/HBoxContainer4"]
+margin_right = 69.0
+margin_bottom = 40.0
+
+[node name="ckVertex" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+margin_right = 69.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+pressed = true
+text = "Vertex"
+
+[node name="ckMagnets" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 44.0
+margin_right = 82.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 0, 40 )
+pressed = true
+text = "Magnets"
+
+[node name="ckAffectScene" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 88.0
+margin_right = 179.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 0, 40 )
+pressed = true
+text = "Affect Whole Sub Scene"
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 44.0
+margin_right = 99.0
+margin_bottom = 58.0
+size_flags_stretch_ratio = 0.0
+text = "Face Alignment"
+
+[node name="ckFaceNone" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 62.0
+margin_right = 99.0
+margin_bottom = 86.0
+pressed = true
+group = SubResource( 3 )
+text = "None"
+
+[node name="ckFacePosZ" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 90.0
+margin_right = 99.0
+margin_bottom = 114.0
+group = SubResource( 3 )
+text = "+Z"
+
+[node name="ckFaceNegZ" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 118.0
+margin_right = 99.0
+margin_bottom = 142.0
+group = SubResource( 3 )
+text = "-Z"
+
+[node name="ckFacePosX" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 146.0
+margin_right = 99.0
+margin_bottom = 170.0
+group = SubResource( 3 )
+text = "+X"
+
+[node name="ckFaceNegX" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 174.0
+margin_right = 99.0
+margin_bottom = 198.0
+group = SubResource( 3 )
+text = "-X"
+
+[node name="ckFacePosY" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 202.0
+margin_right = 99.0
+margin_bottom = 226.0
+group = SubResource( 3 )
+text = "+Y"
+
+[node name="ckFaceNegY" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer4/VBoxContainer"]
+visible = false
+margin_top = 230.0
+margin_right = 99.0
+margin_bottom = 254.0
+group = SubResource( 3 )
+text = "-Y"
